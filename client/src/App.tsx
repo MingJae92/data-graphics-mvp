@@ -1,29 +1,10 @@
-import { useMemo } from 'react';
 import { useRaceSocket } from './hooks/useRaceSocket';
 import { LeaderboardRow } from './components/LeaderboardRow';
-import type { AthleteWithGap } from './types/race';
+import { useSorttableLeaderboard } from './hooks/useSorttableLeaderboard';
 
 export default function App() {
   const { connected, latestRaceUpdate } = useRaceSocket();
-
-  // Compute leaderboard with gap
-  const leaderboard: AthleteWithGap[] = useMemo(() => {
-    if (latestRaceUpdate.length === 0) return [];
-
-    const sorted = [...latestRaceUpdate].sort(
-      (a, b) => a.rank - b.rank
-    );
-
-    const leaderDistance = sorted[0].distance;
-
-    return sorted.map((athlete, index) => ({
-      ...athlete,
-      gap:
-        index === 0
-          ? 'Leader'
-          : `+ ${(leaderDistance - athlete.distance).toFixed(1)} m`,
-    }));
-  }, [latestRaceUpdate]);
+  const { leaderboard, handleSort, sortArrow } = useSorttableLeaderboard(latestRaceUpdate);
 
   return (
     <div className="min-h-screen w-screen bg-neutral-900 text-white font-mono">
@@ -45,12 +26,22 @@ export default function App() {
               <table className="w-full table-fixed border-collapse">
                 <thead className="text-neutral-400 text-sm sticky top-0 bg-neutral-900 border-b border-neutral-700 z-10">
                   <tr>
-                    <th className="w-12 text-left px-2 py-2">#</th>
-                    <th className="text-left px-2 py-2">Name</th>
-                    <th className="w-32 text-left px-2 py-2">Country</th>
-                    <th className="w-32 text-left px-2 py-2">Gap</th>
-                    <th className="w-32 text-left px-2 py-2">Distance</th>
-                    <th className="w-32 text-left px-2 py-2">Action</th> {/* PUSH GRAPHIC column */}
+                    <th className="w-12 text-left px-2 py-2 cursor-pointer" onClick={() => handleSort('rank')}>
+                      # {sortArrow('rank')}
+                    </th>
+                    <th className="text-left px-2 py-2 cursor-pointer" onClick={() => handleSort('name')}>
+                      Name {sortArrow('name')}
+                    </th>
+                    <th className="w-32 text-left px-2 py-2 cursor-pointer" onClick={() => handleSort('country')}>
+                      Country {sortArrow('country')}
+                    </th>
+                    <th className="w-32 text-left px-2 py-2 cursor-pointer" onClick={() => handleSort('gap')}>
+                      Gap {sortArrow('gap')}
+                    </th>
+                    <th className="w-32 text-left px-2 py-2 cursor-pointer" onClick={() => handleSort('distance')}>
+                      Distance {sortArrow('distance')}
+                    </th>
+                    <th className="w-32 text-left px-2 py-2">Action</th>
                   </tr>
                 </thead>
                 <tbody>
