@@ -18,9 +18,8 @@ export const LeaderboardRow = React.memo(({ athlete }: Props) => {
       <td className="px-2">{athlete.name}</td>
 
       <td
-        className={`px-2 ${
-          hasCountry ? 'text-neutral-300' : 'text-neutral-500 italic'
-        }`}
+        className={`px-2 ${hasCountry ? 'text-neutral-300' : 'text-neutral-500 italic'
+          }`}
       >
         {athlete.country ?? '—'}
       </td>
