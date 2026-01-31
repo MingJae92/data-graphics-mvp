@@ -28,6 +28,7 @@ export default function App() {
   return (
     <div className="min-h-screen w-screen bg-neutral-900 text-white font-mono">
       <div className="px-8">
+        {/* Header */}
         <header className="mb-6 flex justify-between items-center border-b border-neutral-700 pb-4">
           <h1 className="text-2xl font-bold text-yellow-500">GIRRAPHIC LIVE</h1>
           <span className={connected ? 'text-green-400' : 'text-red-400'}>
@@ -35,6 +36,7 @@ export default function App() {
           </span>
         </header>
 
+        {/* Leaderboard */}
         <main>
           {leaderboard.length === 0 ? (
             <div className="text-neutral-400">Waiting for race data...</div>
@@ -48,6 +50,7 @@ export default function App() {
                     <th className="w-32 text-left px-2 py-2">Country</th>
                     <th className="w-32 text-left px-2 py-2">Gap</th>
                     <th className="w-32 text-left px-2 py-2">Distance</th>
+                    <th className="w-32 text-left px-2 py-2">Action</th> {/* PUSH GRAPHIC column */}
                   </tr>
                 </thead>
                 <tbody>
