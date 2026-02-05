@@ -32,9 +32,8 @@ export const LeaderboardRow = React.memo(
 
         {/* Country (hidden on mobile) */}
         <td
-          className={`hidden sm:table-cell px-2 ${
-            hasCountry ? 'text-neutral-300' : 'text-neutral-500 italic'
-          }`}
+          className={`hidden sm:table-cell px-2 ${hasCountry ? 'text-neutral-300' : 'text-neutral-500 italic'
+            }`}
         >
           {athlete.country ?? '—'}
         </td>
